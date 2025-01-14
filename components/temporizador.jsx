@@ -18,7 +18,7 @@ const publicKey =
 export default function Temporizador() {
   const notificacion = () => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
-      navigator.serviceWorker.register("./sw.js").then((registration) => {
+      navigator.serviceWorker.register("/sw.js").then((registration) => {
         console.log("Service Worker registrado.");
 
         // Solicitar permiso
