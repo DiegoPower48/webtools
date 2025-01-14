@@ -40,9 +40,7 @@ export default function Temporizador() {
           registration.pushManager
             .subscribe({
               userVisibleOnly: true,
-              applicationServerKey: urlBase64ToUint8Array(
-                process.env.NEXT_PUBLIC_VAPID_KEY
-              ),
+              applicationServerKey: urlBase64ToUint8Array(publicKey),
             })
             .then((subscription) => {
               console.log("Suscripción generada:", subscription);
