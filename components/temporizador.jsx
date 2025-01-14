@@ -18,7 +18,7 @@ const publicKey =
 const enviarSuscripcion = async (subscription) => {
   try {
     const response = await axios.post(
-      "https://backendmichu.onrender.com/notificacion",
+      "http://localhost:3000/notificacion",
       subscription
     );
     console.log("Respuesta del servidor:", response.data);
