@@ -17,9 +17,13 @@ const publicKey =
 
 const enviarSuscripcion = async (subscription) => {
   try {
-    const response = await axios.post("/notificacion", subscription, {
-      headers: { "Content-Type": "application/json" },
-    });
+    const response = await axios.post(
+      "https://backendmichu.onrender.com/notificacion",
+      subscription,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     console.log("Respuesta del servidor:", response.data);
   } catch (error) {
     console.error(
