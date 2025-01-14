@@ -19,10 +19,7 @@ const enviarSuscripcion = async (subscription) => {
   try {
     const response = await axios.post(
       "https://backendmichu.onrender.com/notificacion",
-      subscription,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
+      subscription
     );
     console.log("Respuesta del servidor:", response.data);
   } catch (error) {
