@@ -15,37 +15,50 @@ function urlBase64ToUint8Array(base64String) {
 const publicKey =
   "BMx5hpBdfRZdXhHf95gX5yX4iXTupWYCA6ERRvA6j-gb7bG4XT2rM0XLfWwz_VL0CFYMEkfKm0dYC6vVfrYgHXM";
 
+const enviarSuscripcion = async (subscription) => {
+  try {
+    const response = await axios.post("/notificacion", subscription, {
+      headers: { "Content-Type": "application/json" },
+    });
+    console.log("Respuesta del servidor:", response.data);
+  } catch (error) {
+    console.error(
+      "Error enviando la suscripción al servidor:",
+      error.response?.data || error.message
+    );
+  }
+};
+
 export default function Temporizador() {
   const notificacion = () => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
-      navigator.serviceWorker.register("/sw.js").then((registration) => {
-        console.log("Service Worker registrado.");
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          console.log("Service Worker registrado:", registration);
 
-        // Solicitar permiso
-        Notification.requestPermission().then((permission) => {
-          if (permission === "granted") {
-            console.log("Permiso concedido.");
-
-            // Suscribir al usuario
-            registration.pushManager
-              .subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(publicKey),
-              })
-              .then((subscription) => {
-                console.log("Suscripción exitosa:", subscription);
-                // Envía la suscripción al servidor
-                axios.post(
-                  "http://localhost:3000/notificacion",
-                  JSON.stringify(subscription)
-                );
-              })
-              .catch((error) => {
-                console.error("Error al suscribir al usuario:", error);
-              });
-          }
+          registration.pushManager
+            .subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: urlBase64ToUint8Array(
+                process.env.NEXT_PUBLIC_VAPID_KEY
+              ),
+            })
+            .then((subscription) => {
+              console.log("Suscripción generada:", subscription);
+              enviarSuscripcion(subscription);
+            })
+            .catch((error) => {
+              console.error("Error al suscribirse:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error registrando el Service Worker:", error);
         });
-      });
+    } else {
+      console.error(
+        "Service Workers o Push Manager no son compatibles con este navegador."
+      );
     }
   };
   return (
