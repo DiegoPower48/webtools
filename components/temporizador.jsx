@@ -18,34 +18,36 @@ const publicKey =
 export default function Temporizador() {
   const notificacion = () => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
-      navigator.serviceWorker.register("/sw.js").then((registration) => {
-        console.log("Service Worker registrado.");
+      navigator.serviceWorker
+        .register("/components/sw.js")
+        .then((registration) => {
+          console.log("Service Worker registrado.");
 
-        // Solicitar permiso
-        Notification.requestPermission().then((permission) => {
-          if (permission === "granted") {
-            console.log("Permiso concedido.");
+          // Solicitar permiso
+          Notification.requestPermission().then((permission) => {
+            if (permission === "granted") {
+              console.log("Permiso concedido.");
 
-            // Suscribir al usuario
-            registration.pushManager
-              .subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(publicKey),
-              })
-              .then((subscription) => {
-                console.log("Suscripción exitosa:", subscription);
-                // Envía la suscripción al servidor
-                axios.post(
-                  "http://localhost:3000/notificacion",
-                  JSON.stringify(subscription)
-                );
-              })
-              .catch((error) => {
-                console.error("Error al suscribir al usuario:", error);
-              });
-          }
+              // Suscribir al usuario
+              registration.pushManager
+                .subscribe({
+                  userVisibleOnly: true,
+                  applicationServerKey: urlBase64ToUint8Array(publicKey),
+                })
+                .then((subscription) => {
+                  console.log("Suscripción exitosa:", subscription);
+                  // Envía la suscripción al servidor
+                  axios.post(
+                    "http://localhost:3000/notificacion",
+                    JSON.stringify(subscription)
+                  );
+                })
+                .catch((error) => {
+                  console.error("Error al suscribir al usuario:", error);
+                });
+            }
+          });
         });
-      });
     }
   };
   return (
