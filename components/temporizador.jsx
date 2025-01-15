@@ -21,10 +21,7 @@ const enviarSuscripcion = async (subscription) => {
       icon: "https://static.wikia.nocookie.net/esmegaman/images/2/2a/MegaMan.png",
     };
 
-    const response = await axios.post(
-      "http://localhost:3000/notificacion",
-      payload
-    );
+    const response = await axios.post(process.env.NEXT_PUBLIC_API_URL, payload);
 
     console.log("Respuesta del servidor:", response.data);
   } catch (error) {
