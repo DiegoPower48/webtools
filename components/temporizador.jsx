@@ -1,6 +1,9 @@
 "use client";
 import axios from "axios";
 
+const publicKey =
+  "BMx5hpBdfRZdXhHf95gX5yX4iXTupWYCA6ERRvA6j-gb7bG4XT2rM0XLfWwz_VL0CFYMEkfKm0dYC6vVfrYgHXM";
+
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
   const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
@@ -12,15 +15,20 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 
-const publicKey =
-  "BMx5hpBdfRZdXhHf95gX5yX4iXTupWYCA6ERRvA6j-gb7bG4XT2rM0XLfWwz_VL0CFYMEkfKm0dYC6vVfrYgHXM";
-
 const enviarSuscripcion = async (subscription) => {
   try {
+    const payload = {
+      subscription,
+      title: "Megaman",
+      description: "Mega descripción xD.",
+      icon: "https://static.wikia.nocookie.net/esmegaman/images/2/2a/MegaMan.png",
+    };
+
     const response = await axios.post(
       "http://localhost:3000/notificacion",
-      subscription
+      payload
     );
+
     console.log("Respuesta del servidor:", response.data);
   } catch (error) {
     console.error(
