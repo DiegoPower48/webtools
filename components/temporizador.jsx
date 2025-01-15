@@ -1,9 +1,6 @@
 "use client";
 import axios from "axios";
 
-const publicKey =
-  "BMx5hpBdfRZdXhHf95gX5yX4iXTupWYCA6ERRvA6j-gb7bG4XT2rM0XLfWwz_VL0CFYMEkfKm0dYC6vVfrYgHXM";
-
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
   const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
@@ -49,7 +46,9 @@ export default function Temporizador() {
           registration.pushManager
             .subscribe({
               userVisibleOnly: true,
-              applicationServerKey: urlBase64ToUint8Array(publicKey),
+              applicationServerKey: urlBase64ToUint8Array(
+                process.env.NEXT_PUBLIC_PUBLIC_KEY
+              ),
             })
             .then((subscription) => {
               console.log("Suscripción generada:", subscription);
@@ -68,6 +67,7 @@ export default function Temporizador() {
       );
     }
   };
+
   return (
     <div>
       <div
