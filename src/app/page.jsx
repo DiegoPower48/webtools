@@ -6,15 +6,28 @@ import Temporizador from "../../components/temporizador";
 
 export default function page() {
   return (
-    <div className="w-screen h-screen p-10">
-      <div className="flex h-20 font-bold text-4xl justify-center items-center border-b-4 border-white">
+    <div className="grid grid-rows-[1fr,9fr,1fr] h-screen">
+      <div className="row-span-1 font-bold text-4xl grid justify-center items-center p-4 mb-4 bg-red-800">
         WELCOME TO WEBTOOLS
       </div>
-      <div className="h-5/6 grid grid-cols-2 grid-rows-2 items-center ">
-        <Recorder />
-        <Temporizador />
-        <Block />
-        <Calculator />
+      <div className="row-span-2 grid grid-cols-2 grid-rows-2 items-center gap-5 ">
+        <div className="h-full w-full">
+          <Recorder />
+        </div>
+        <div className="  h-full w-full">
+          <Temporizador />
+        </div>
+        <div className="  h-full w-full">
+          <Block />
+        </div>
+        <div className="  h-full w-full">
+          <Calculator />
+        </div>
+      </div>
+      <div className="row-span-1 grid">
+        <a href="https://diegotorres-portfoliodev.vercel.app">
+          Web created by: Diego Torres
+        </a>
       </div>
     </div>
   );

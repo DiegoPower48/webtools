@@ -37,56 +37,68 @@ const Calculator = () => {
   };
 
   return (
-    <div className="max-w-xs mx-auto  p-4 bg-gray-100 rounded-lg shadow-lg">
-      <div className="mb-4">
-        <input
-          type="text"
-          value={input}
-          readOnly
-          className="w-full p-2 text-right text-black bg-white border border-gray-300 rounded-md"
-        />
-      </div>
-      <div className="mb-4">
-        {result && `= ${result}` ? (
-          <div className="flex w-full p-2  text-black h-5 items-center justify-center">
-            {result}
+    <div className="h-full w-full">
+      <div className="h-full w-full border-2 border-white py-5 px-10 grid grid-cols-2">
+        <div className="grid grid-row-[1fr,2fr] ">
+          <div className="flex w-full p-2  text-xl text-white items-center justify-center ">
+            EQUAL TO
           </div>
-        ) : (
-          <div className="w-full p-2 text-right text-black h-5"></div>
-        )}
-      </div>
-      <div className="grid grid-cols-4 gap-2">
-        {[
-          "7",
-          "8",
-          "9",
-          "/",
-          "4",
-          "5",
-          "6",
-          "*",
-          "1",
-          "2",
-          "3",
-          "-",
-          "0",
-          ".",
-          "+",
-        ].map((symbol) => (
-          <button
-            key={symbol}
-            onClick={() => handleInput(symbol)}
-            className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            {symbol}
-          </button>
-        ))}
-        <button
-          onClick={clearInput}
-          className="col-span-4 p-2 bg-red-500 text-white rounded hover:bg-red-600"
-        >
-          Clear
-        </button>
+          {result && `= ${result}` ? (
+            <div
+              className={`grid h-full p-2  text-white  ${
+                result.length > 10 ? "text-sm" : "text-3xl"
+              }`}
+            >
+              = {result}
+            </div>
+          ) : (
+            <div className="w-full p-2 text-right text-black h-5"></div>
+          )}
+        </div>
+        <div className="w-full h-full">
+          <div className="mb-4">
+            <input
+              type="text"
+              value={input}
+              readOnly
+              className="w-full p-2 text-right text-xl text-black bg-white border border-gray-300 rounded-md"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 gap-2">
+            {[
+              "7",
+              "8",
+              "9",
+              "/",
+              "4",
+              "5",
+              "6",
+              "*",
+              "1",
+              "2",
+              "3",
+              "-",
+              "0",
+              ".",
+              "+",
+            ].map((symbol) => (
+              <button
+                key={symbol}
+                onClick={() => handleInput(symbol)}
+                className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
+                {symbol}
+              </button>
+            ))}
+            <button
+              onClick={clearInput}
+              className="col-span-4 p-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

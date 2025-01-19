@@ -85,20 +85,22 @@ export default function Recorder() {
 
   return (
     <>
-      <div>
-        <div className="flex items-center justify-center h-1/6">Recorder</div>
-        <div className=" flex space-x-10 justify-center h-5/6">
-          <div className="w-2/6  ">
+      <div className="h-full border-2 border-white p-5">
+        <div className="h-1/6 flex items-center justify-center p-10 bg-red-800 font-bold">
+          Recorder
+        </div>
+        <div className="h-5/6 flex space-x-6  justify-center ">
+          <div className=" flex items-center justify-center  ">
             <p
               onClick={() => {
                 videoRecorder();
               }}
-              className={`flex justify-center bg-red-700 p-20 rounded-lg font-bold  hover:scale-105 ${grabando}`}
+              className={`flex justify-center bg-red-700 p-20 rounded-lg font-bold hover:scale-105  ${grabando}`}
             >
               AUDIO
             </p>
           </div>
-          <div className="w-2/6  ">
+          <div className=" flex items-center justify-center ">
             <p
               onClick={() => {
                 videoAndAudioRecorder();

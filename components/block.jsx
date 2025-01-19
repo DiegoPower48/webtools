@@ -44,8 +44,8 @@ export default function Block() {
   };
 
   return (
-    <div className="bg-black  h-full w-full border-4 border-white ">
-      <div className="flex w-full border-b-2 border-white h-1/6">
+    <div className="h-full border-2 border-white ">
+      <div className="flex  border-b-2 h-1/6 ">
         <div className="flex w-4/6">
           <div className="flex items-center bg-white text-black">Nombre: </div>
           <input
@@ -63,9 +63,9 @@ export default function Block() {
           Descargar
         </div>
       </div>
-      <div className="h-5/6">
+      <div className="h-5/6 grid">
         <textarea
-          className="  bg-black text-white h-full w-full p-5 resize-none border-b-2 border-white"
+          className="  bg-black text-white   p-5 resize-none"
           spellCheck="false"
           value={data}
           onChange={handle}
