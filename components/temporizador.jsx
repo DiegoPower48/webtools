@@ -1,7 +1,6 @@
 "use client";
 import axios from "axios";
-import { useState } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -14,13 +13,13 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 
-const enviarSuscripcion = async (subscription, message, time, reminder) => {
+const enviarSuscripcion = async (subscription, message, time) => {
   try {
     const payload = {
       subscription,
       message: message,
       time: time,
-      reminder: reminder,
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
 
     const response = await axios.post(
@@ -54,12 +53,7 @@ export default function Temporizador() {
               ),
             })
             .then((subscription) => {
-              enviarSuscripcion(
-                subscription,
-                data.message,
-                data.time,
-                data.reminder
-              );
+              enviarSuscripcion(subscription, data.message, data.time);
             })
             .catch((error) => {
               console.error("Error al suscribirse:", error);
@@ -103,15 +97,6 @@ export default function Temporizador() {
           <div className="w-full  flex justify-center items-center">
             REPETIR CADA:
           </div>
-
-          <select
-            className="p-2 border border-gray-300 rounded w-full text-black"
-            {...register("reminder")}
-          >
-            <option value={5}>5 minutes</option>
-            <option value={10}>10 minutes</option>
-            <option value={15}>15 minutes</option>
-          </select>
         </div>
         <button
           className="m-16 flex items-center justify-center  p-4 bg-red-500 rounded-lg hover:scale-105"
