@@ -21,7 +21,7 @@ const enviarSuscripcion = async (subscription, message, time) => {
       time: time,
       timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
-
+    console.log(payload);
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/notificacion`,
       payload
