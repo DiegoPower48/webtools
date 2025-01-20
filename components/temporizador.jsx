@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -21,10 +22,23 @@ const enviarSuscripcion = async (subscription, message, time) => {
       time: time,
       timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
-    console.log(payload);
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/notificacion`,
       payload
+    );
+    toast.success(
+      `Timer set:
+      Message: ${message}
+      Time: ${time}`,
+      {
+        style: {
+          background: "#333",
+          color: "#fff",
+          padding: "16px",
+          borderRadius: "8px",
+          fontSize: "16px",
+        },
+      }
     );
     console.log("Respuesta del servidor:", response.data);
   } catch (error) {
@@ -106,7 +120,7 @@ export default function Temporizador() {
           />
 
           <div className="text-red-600 grid-rows-1  font-bold flex items-center justify-center">
-            {errors.message && errors.time.message}
+            {errors.time && errors.time.message}
           </div>
         </div>
         <button
@@ -116,6 +130,7 @@ export default function Temporizador() {
           ESTABLECER RELOJ
         </button>
       </div>
+      <Toaster />
     </form>
   );
 }

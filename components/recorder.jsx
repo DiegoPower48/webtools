@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Recorder() {
   const [filmando, setfilmando] = useState("");
@@ -48,7 +49,7 @@ export default function Recorder() {
         setGrabando("");
       });
     } catch (error) {
-      alert(`ERROR DE LA SOLICITUD, MENSAJE DE ERROR:${error.message}`);
+      toast.error(error.message);
     }
   };
 
@@ -79,7 +80,51 @@ export default function Recorder() {
         link.click();
       });
     } catch (error) {
-      alert(`ERROR DE LA SOLICITUD, MENSAJE DE ERROR:${error.message}`);
+      toast.error(error.message);
+    }
+  };
+
+  const screenShot = async () => {
+    try {
+      // Solicitar captura de pantalla
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+      });
+
+      // Obtener la primera pista de video del MediaStream
+      const videoTrack = stream.getVideoTracks()[0];
+
+      // Crear el objeto ImageCapture con la pista de video
+      const imageCapture = new ImageCapture(videoTrack);
+
+      // Capturar un fotograma
+      const bitmap = await imageCapture.grabFrame();
+
+      // Crear un canvas dinámicamente
+      const canvas = document.createElement("canvas");
+      canvas.width = bitmap.width;
+      canvas.height = bitmap.height;
+
+      // Dibujar el fotograma en el canvas
+      const context = canvas.getContext("2d");
+      context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+
+      // Convertir el canvas a una imagen
+      const screenshotURL = canvas.toDataURL("image/png");
+
+      // Crear un enlace invisible y disparar la descarga automáticamente
+      const downloadLink = document.createElement("a");
+      downloadLink.href = screenshotURL;
+      downloadLink.download = `${concate}.png`;
+      downloadLink.style.display = "none";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
+      // Detener la captura
+      videoTrack.stop();
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -103,7 +148,7 @@ export default function Recorder() {
           <div className=" flex items-center justify-center ">
             <p
               onClick={() => {
-                videoAndAudioRecorder();
+                screenShot();
               }}
               className={`flex  justify-center bg-red-700 p-20 rounded-lg font-bold  hover:scale-105 ${filmando}`}
             >
@@ -112,6 +157,7 @@ export default function Recorder() {
           </div>
         </div>
       </div>
+      <Toaster />
     </>
   );
 }
