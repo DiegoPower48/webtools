@@ -44,21 +44,21 @@ export default function Block() {
   };
 
   return (
-    <div className="h-full border-2 border-white ">
-      <div className="flex  border-b-2 h-1/6 ">
-        <div className="flex w-4/6">
-          <div className="flex items-center bg-white text-black">Name: </div>
-          <input
-            className="p-2 w-full bg-black outline-none resize-none"
-            spellCheck="false"
-            type="text"
-            value={txtname}
-            onChange={nombre}
-          />
+    <div className="h-full border-2 border-white rounded-md">
+      <div className="grid grid-rows-1 grid-cols-8  border-b-2 h-1/6 ">
+        <div className="col-span-1 flex justify-center items-center font-bold bg-white text-black">
+          Name:
         </div>
+        <input
+          className="col-span-5 p-2 w-full bg-black outline-none resize-none"
+          spellCheck="false"
+          type="text"
+          value={txtname}
+          onChange={nombre}
+        />
         <div
           onClick={exportToTextFile}
-          className="flex p-2 w-2/6 text-black bg-white hover:bg-red-700 hover:text-white items-center justify-center font-bold "
+          className="col-span-2 flex p-2  bg-red-800 hover:bg-red-600 hover:text-white items-center justify-center font-bold "
         >
           Download
         </div>

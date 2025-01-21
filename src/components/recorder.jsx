@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { IconVolume } from "@tabler/icons-react";
+import { IconVideo } from "@tabler/icons-react";
 
 export default function Recorder() {
   const [filmando, setfilmando] = useState("");
@@ -86,28 +88,32 @@ export default function Recorder() {
 
   return (
     <>
-      <div className="h-full grid border-2 border-white p-5">
+      <div className="h-full grid border-2 border-white p-5 rounded-md">
         <div className="grid grid-cols-2 grid-row-1 md:gap-x-5 gap-x-4 ">
           <div className=" flex items-center justify-center ">
-            <p
+            <div
               onClick={() => {
                 videoRecorder();
               }}
-              className={`flex h-full w-full items-center justify-center bg-red-700  rounded-lg font-bold hover:scale-105  ${grabando}`}
+              className={`flex h-full w-full items-center justify-center bg-red-800  rounded-lg font-bold hover:scale-105  hover:bg-red-600 ${grabando}`}
             >
-              <img className="fill-slate-800" src="./video.svg" alt="video" />
-            </p>
+              <div className="bg-white rounded-full p-2">
+                <IconVolume className="h-10 w-10" color="black" stroke={2} />
+              </div>
+            </div>
           </div>
           <div className="  flex items-center justify-center ">
-            <p
+            <div
               onClick={() => {
                 videoAndAudioRecorder();
               }}
-              className={`flex h-full w-full items-center justify-center bg-red-700  rounded-lg font-bold  hover:scale-105 ${filmando}`}
+              className={`flex h-full w-full items-center justify-center bg-red-800  rounded-lg font-bold  hover:bg-red-600 hover:scale-105 ${filmando}`}
             >
-              <img src="./video.svg" alt="video" />
-              <img src="./audio.svg" alt="audio" />
-            </p>
+              <div className=" flex bg-white rounded-full p-2">
+                <IconVideo className="h-10 w-10" color="black" stroke={2} />
+                <IconVolume className="h-10 w-10" color="black" stroke={2} />
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -37,9 +37,9 @@ const Calculator = () => {
   };
 
   return (
-    <div className="h-full w-full">
-      <div className="h-full w-full border-2 border-white px-2 py-5 md:px-10 grid grid-cols-2">
-        <div className="grid grid-row-[1fr,2fr] ">
+    <div className="h-full w-full rounded-md">
+      <div className="h-full border-2 border-white p-5 md:px-10 grid grid-cols-2">
+        <div className="h-full  grid grid-row-[1fr,2fr] ">
           <div className="flex w-full p-2  text-xl text-white items-center justify-center ">
             EQUAL TO =
           </div>
@@ -55,8 +55,9 @@ const Calculator = () => {
             <div className="w-full p-2 text-right text-black h-5"></div>
           )}
         </div>
-        <div className="w-full h-full">
-          <div className="mb-4">
+
+        <div className="  grid grid-cols-1  align-middle">
+          <div className="p-2 flex items-center">
             <input
               type="text"
               value={input}
@@ -64,8 +65,7 @@ const Calculator = () => {
               className="w-full p-2 text-right text-xl text-black bg-white border border-gray-300 rounded-md"
             />
           </div>
-
-          <div className="grid grid-cols-4 gap-2">
+          <div className="p-2 grid grid-cols-4 gap-2">
             {[
               "7",
               "8",
@@ -91,13 +91,13 @@ const Calculator = () => {
                 {symbol}
               </button>
             ))}
-            <button
-              onClick={clearInput}
-              className="col-span-4 p-2 bg-red-500 text-white rounded hover:bg-red-600"
-            >
-              Clear
-            </button>
           </div>
+          <button
+            onClick={clearInput}
+            className="m-2 p-2 bg-red-800 text-white rounded hover:bg-red-600"
+          >
+            Clear
+          </button>
         </div>
       </div>
     </div>
