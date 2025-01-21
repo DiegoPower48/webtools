@@ -15,6 +15,7 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 const enviarSuscripcion = async (subscription, message, time) => {
+  console.log(message, time);
   try {
     const payload = {
       subscription,
@@ -26,6 +27,7 @@ const enviarSuscripcion = async (subscription, message, time) => {
       `${process.env.NEXT_PUBLIC_API_URL}/notificacion`,
       payload
     );
+
     toast.success(
       `Timer set:
       Message: ${message}

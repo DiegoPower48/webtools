@@ -12,7 +12,8 @@ export default function page() {
       }`}
     >
       <div className="font-bold text-4xl grid h-32 justify-center items-center text-center md:p-4 md:mb-4 bg-red-800">
-        WELCOME TO FAST TOOLS
+        <div>WELCOME TO FAST TOOLS</div>
+        <div className="text-lg">(browser edition)</div>
       </div>
       <div className=" md:row-span-2  grid  grid-cols-1 md:grid-cols-2 md:grid-rows-2 grid-rows-4 items-center gap-y-4 md:gap-5 ">
         <div className="h-full w-full ">
