@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 export default function Block() {
   const [data, setData] = useState("");
-  const [txtname, setTxtName] = useState("nota");
+  const [txtname, setTxtName] = useState("note");
 
   const exportToTextFile = () => {
     const blob = new Blob([data], { type: "text/plain" });
@@ -47,7 +47,7 @@ export default function Block() {
     <div className="h-full border-2 border-white ">
       <div className="flex  border-b-2 h-1/6 ">
         <div className="flex w-4/6">
-          <div className="flex items-center bg-white text-black">Nombre: </div>
+          <div className="flex items-center bg-white text-black">Name: </div>
           <input
             className="p-2 w-full bg-black outline-none resize-none"
             spellCheck="false"
@@ -60,7 +60,7 @@ export default function Block() {
           onClick={exportToTextFile}
           className="flex p-2 w-2/6 text-black bg-white hover:bg-red-700 hover:text-white items-center justify-center font-bold "
         >
-          Descargar
+          Download
         </div>
       </div>
       <div className="h-5/6 grid">

@@ -94,7 +94,7 @@ export default function Temporizador() {
     >
       <div className="w-full col-span-3 row-span-1  flex p-5">
         <div className="flex w-1/6 justify-center items-center font-bold">
-          Mensaje:
+          Message:
         </div>
         <textarea
           className="w-3/6  text-white bg-black border-white border-2 justify-center items-center resize-none "
@@ -111,11 +111,11 @@ export default function Temporizador() {
       <div className="w-full row-span-2 col-span-2 grid grid-cols-2">
         <div className="grid grid-rows-6">
           <div className="w-full row-span-1 flex justify-center items-center">
-            HORA:
+            TIME:
           </div>
           <input
             type="time"
-            className="w-4/6 row-span-3 m-7 rounded-xl flex items-center text-4xl justify-center text-black"
+            className="w-5/6 row-span-3 m-7 rounded-xl flex items-start text-4xl justify-center text-black"
             {...register("time", { required: "Time is required" })}
           />
 
@@ -124,10 +124,10 @@ export default function Temporizador() {
           </div>
         </div>
         <button
-          className="m-10 flex items-center justify-center  p-4 bg-red-500 rounded-lg hover:scale-105"
+          className="md:m-7 m-5 flex items-center justify-center font-bold p-4 bg-red-500 rounded-lg hover:scale-105"
           type="submit"
         >
-          ESTABLECER RELOJ
+          SET TIME
         </button>
       </div>
       <Toaster />

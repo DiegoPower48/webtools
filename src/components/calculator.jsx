@@ -38,14 +38,14 @@ const Calculator = () => {
 
   return (
     <div className="h-full w-full">
-      <div className="h-full w-full border-2 border-white py-5 px-10 grid grid-cols-2">
+      <div className="h-full w-full border-2 border-white px-2 py-5 md:px-10 grid grid-cols-2">
         <div className="grid grid-row-[1fr,2fr] ">
           <div className="flex w-full p-2  text-xl text-white items-center justify-center ">
             EQUAL TO =
           </div>
           {result && `= ${result}` ? (
             <div
-              className={`grid h-full p-2  text-white  ${
+              className={`grid h-full p-2  text-white items-start justify-center  ${
                 result.length > 10 ? "text-sm" : "text-3xl"
               }`}
             >

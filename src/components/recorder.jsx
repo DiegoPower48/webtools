@@ -84,75 +84,29 @@ export default function Recorder() {
     }
   };
 
-  const screenShot = async () => {
-    try {
-      // Solicitar captura de pantalla
-      const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
-      });
-
-      // Obtener la primera pista de video del MediaStream
-      const videoTrack = stream.getVideoTracks()[0];
-
-      // Crear el objeto ImageCapture con la pista de video
-      const imageCapture = new ImageCapture(videoTrack);
-
-      // Capturar un fotograma
-      const bitmap = await imageCapture.grabFrame();
-
-      // Crear un canvas dinámicamente
-      const canvas = document.createElement("canvas");
-      canvas.width = bitmap.width;
-      canvas.height = bitmap.height;
-
-      // Dibujar el fotograma en el canvas
-      const context = canvas.getContext("2d");
-      context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-
-      // Convertir el canvas a una imagen
-      const screenshotURL = canvas.toDataURL("image/png");
-
-      // Crear un enlace invisible y disparar la descarga automáticamente
-      const downloadLink = document.createElement("a");
-      downloadLink.href = screenshotURL;
-      downloadLink.download = `${concate}.png`;
-      downloadLink.style.display = "none";
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-
-      // Detener la captura
-      videoTrack.stop();
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
   return (
     <>
-      <div className="h-full border-2 border-white p-5">
-        <div className="h-1/6 flex items-center justify-center p-10 bg-red-800 font-bold">
-          Recorder
-        </div>
-        <div className="h-5/6 flex space-x-6  justify-center ">
-          <div className=" flex items-center justify-center  ">
+      <div className="h-full grid border-2 border-white p-5">
+        <div className="grid grid-cols-2 grid-row-1 md:gap-x-5 gap-x-4 ">
+          <div className=" flex items-center justify-center ">
             <p
               onClick={() => {
                 videoRecorder();
               }}
-              className={`flex justify-center bg-red-700 p-20 rounded-lg font-bold hover:scale-105  ${grabando}`}
+              className={`flex h-full w-full items-center justify-center bg-red-700  rounded-lg font-bold hover:scale-105  ${grabando}`}
             >
-              AUDIO
+              <img className="fill-slate-800" src="./video.svg" alt="video" />
             </p>
           </div>
-          <div className=" flex items-center justify-center ">
+          <div className="  flex items-center justify-center ">
             <p
               onClick={() => {
-                screenShot();
+                videoAndAudioRecorder();
               }}
-              className={`flex  justify-center bg-red-700 p-20 rounded-lg font-bold  hover:scale-105 ${filmando}`}
+              className={`flex h-full w-full items-center justify-center bg-red-700  rounded-lg font-bold  hover:scale-105 ${filmando}`}
             >
-              VIDEO
+              <img src="./video.svg" alt="video" />
+              <img src="./audio.svg" alt="audio" />
             </p>
           </div>
         </div>
