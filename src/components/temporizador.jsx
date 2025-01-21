@@ -104,7 +104,7 @@ export default function Temporizador() {
             type="text"
             {...register("message", {
               required: "Message is required",
-              maxLength: { value: 30, message: "Max 30 characters" },
+              maxLength: { value: 80, message: "Max 80 characters" },
             })}
           />
         </div>
