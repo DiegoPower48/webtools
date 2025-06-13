@@ -37,8 +37,8 @@ const Calculator = () => {
   };
 
   return (
-    <div className="h-full w-full rounded-md">
-      <div className="h-full border-2 border-white p-5 md:px-10 grid grid-cols-2">
+    <div className="h-full w-full border-2 border-white rounded-lg">
+      <div className="h-full  p-5 md:px-10 grid grid-cols-2">
         <div className="h-full  grid grid-row-[1fr,2fr] ">
           <div className="flex w-full p-2  text-xl text-white items-center justify-center ">
             EQUAL TO =
