@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import React, { useState, useRef, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { IconVolume, IconVideo, IconScreenShare, IconPlayerStop } from "@tabler/icons-react";
+import { IconVolume, IconScreenShare, IconPlayerStop } from "@tabler/icons-react";
 
 export default function Recorder() {
   const [filmando, setFilmando] = useState("");
@@ -121,7 +121,7 @@ export default function Recorder() {
               className={`flex h-full flex-col w-full items-center justify-center transform duration-300 bg-red-800 rounded-lg font-bold hover:scale-105 hover:bg-red-600 hover:text-white text-black ${grabando}`}
             >
               <div className="bg-white rounded-full p-2">
-                <IconVideo className="h-10 w-10" color="black" stroke={2} />
+                <IconScreenShare className="h-10 w-10" color="black" stroke={2} />
               </div>
               {grabando && <div className="text-center">Recording <motion.span
               key={dotCount}
