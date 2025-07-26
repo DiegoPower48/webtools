@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Conversor() {
   const canvasRef = useRef();
@@ -34,29 +35,26 @@ export default function Conversor() {
     reader.readAsDataURL(file);
   };
 
-  // Redibuja en canvas cuando cambian valores importantes
   useEffect(() => {
-    if (!originalImage || !canvasRef.current || !width || !height) return;
+    if (!originalImage || !canvasRef.current) return;
+
+    const parsedWidth = parseInt(width);
+    const parsedHeight = parseInt(height);
+
+    if (isNaN(parsedWidth) || isNaN(parsedHeight)) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    const finalWidth = parseInt(width);
-    const finalHeight = parseInt(height);
+    canvas.width = parsedWidth;
+    canvas.height = parsedHeight;
+
+    ctx.clearRect(0, 0, parsedWidth, parsedHeight);
+    ctx.drawImage(originalImage, 0, 0, parsedWidth, parsedHeight);
+
     const mimeType = `image/${format}`;
-
-    canvas.width = finalWidth;
-    canvas.height = finalHeight;
-
-    ctx.clearRect(0, 0, finalWidth, finalHeight);
-    ctx.drawImage(originalImage, 0, 0, finalWidth, finalHeight);
-
     canvas.toBlob((blob) => {
-      if (!blob) {
-        alert(`El formato "${format}" no es soportado por tu navegador.`);
-        return;
-      }
-
+      
       const blobUrl = URL.createObjectURL(blob);
       setWebpUrl(blobUrl);
     }, mimeType);
@@ -73,47 +71,60 @@ export default function Conversor() {
     handleImage(file);
   };
 
-  const syncAspect = (type, value) => {
-    const val = parseInt(value);
-    if (!aspectRatio || isNaN(val)) return;
-
-    if (type === "width") {
-      setWidth(val);
-      setHeight(Math.round(val / aspectRatio));
-    } else {
-      setHeight(val);
-      setWidth(Math.round(val * aspectRatio));
+  const descargar = () => {
+    if (
+      !width ||
+      !height ||
+      isNaN(parseInt(width)) ||
+      isNaN(parseInt(height))
+    ) {
+      toast.error("Por favor ingresa una resolución válida.");
+      return;
     }
+    const canvas = canvasRef.current;
+    const mimeType = `image/${format}`;
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        toast.error(`El formato "${format}" no es soportado por tu navegador.`);
+        return;
+      }
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `${filename}.${format}`;
+      link.click();
+    }, mimeType);
   };
 
   return (
     <div className="h-full w-full flex flex-col items-center border-2 border-white rounded-md">
-      <div className="bg-red-700 h-16 items-center justify-center flex w-full">
+      <div className="bg-red-700 h-14 items-center justify-center flex w-full">
         <h1 className="text-xl font-bold text-center">CONVERT IMAGE</h1>
       </div>
 
       <div
         className={`grid ${
-          webUrl && "grid-cols-[3fr_1fr] grid-rows-2"
-        } p-5 h-full justify-center`}
+          webUrl && "grid-cols-[3fr_1fr]"
+        } h-full justify-center`}
       >
         <div
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
-          className="row-span-2 w-full h-full flex flex-col justify-center items-center"
+          className="w-full h-full flex flex-col justify-center items-center"
         >
           <label
             htmlFor="imagen"
-            className="h-full flex gap-4 items-center flex-col justify-center"
+            className="h-full w-full grid gap-4 items-center grid-rows-[3fr_1fr] justify-center"
           >
             {preview ? (
               <>
+              <div className="w-full h-full flex justify-center items-center">
                 <img
                   src={preview}
                   alt="Vista previa"
                   className="max-h-48 object-contain border rounded"
-                />
-                <div className="">{'"' + filename + "." + format}</div>
+                /></div>
+                <div className="w-full h-full border-t-2 border-white flex items-center justify-center">
+                <p className=" h-full flex justify-center items-center">{filename + "." + format}</p></div>
               </>
             ) : (
               <div className="font-bold">SELECT OR DRAG IMAGE</div>
@@ -129,14 +140,14 @@ export default function Conversor() {
         </div>
 
         {webUrl && (
-          <>
-            <div>
-              <p className="text-lg font-bold">Select format:</p>
-              <div className="w-full flex justify-center">
+          <div className="border-l-2 p-4 flex flex-col gap-2 h-full border-white">
+            <div className="flex h-full gap-2 flex-col py-2 ">
+              <div className="w-full flex flex-col justify-center">
+                <p className="text-xl font-bold">FORMAT:</p>
                 <select
                   value={format}
                   onChange={(e) => setFormat(e.target.value)}
-                  className="mt-4 h-fit p-1 border rounded text-black"
+                  className=" h-fit p-1 border rounded text-black"
                 >
                   <option value="webp">WEBP</option>
                   <option value="jpeg">JPEG</option>
@@ -145,36 +156,54 @@ export default function Conversor() {
                   <option value="avif">AVIF</option>
                 </select>
               </div>
-              <div className="text-black flex gap-2 mt-2">
-                <input
-                  name="width"
-                  type="number"
-                  className="w-full text-center"
-                  value={width}
-                  onChange={(e) => syncAspect("width", e.target.value)}
-                />
-                <input
-                  name="height"
-                  type="number"
-                  className="w-full text-center"
-                  value={height}
-                  onChange={(e) => syncAspect("height", e.target.value)}
-                />
+              <div className="flex flex-col">
+                <p className="text-xl font-bold">RESOLUTION:</p>
+                <div className="flex w-full gap-2 text-black text-center">
+                  <input
+                    name="width"
+                    type="number"
+                    className="w-full text-center p-1 rounded"
+                    value={width}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setWidth(val);
+                      if (val && aspectRatio) {
+                        setHeight(Math.round(parseInt(val) / aspectRatio));
+                      }
+                    }}
+                  />
+                  <div className="text-white h-full flex items-center">X</div>
+                  <input
+                    name="height"
+                    type="number"
+                   className="w-full text-center p-1 rounded"
+                    value={height}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setHeight(val);
+                      if (val && aspectRatio) {
+                        setWidth(Math.round(parseInt(val) * aspectRatio));
+                      }
+                    }}
+                  />
+                </div>
               </div>
             </div>
-            <div className="w-full h-full flex items-center">
-              <a
-                href={webUrl}
-                download={`${filename}.${format}`}
-                className="bg-green-500 flex text-center justify-center items-center font-bold text-xl text-white p-2 rounded hover:bg-green-600"
-              >
-                CONVERT & DOWNLOAD
-              </a>
+            <div className="w-full flex justify-center items-center">
+              <div className="h-full">
+                <button
+                  onClick={() => descargar()}
+                  className="bg-green-500 flex text-center justify-center items-center font-bold text-xl text-white p-2 rounded hover:bg-green-600"
+                >
+                  CONVERT & DOWNLOAD
+                </button>
+              </div>
             </div>
-          </>
+          </div>
         )}
         <canvas ref={canvasRef} className="hidden" />
       </div>
+      <Toaster />
     </div>
   );
 }
