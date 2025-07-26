@@ -2,14 +2,13 @@ import React from "react";
 import Recorder from "../components/recorder";
 import Block from "../components/block";
 import Calculator from "../components/calculator";
-import Temporizador from "../components/temporizador";
 import Conversor from "@/components/Conversor";
 
 export default function page() {
   return (
     <div
       className={`grid  ${
-        process.env.NEXT_PUBLIC_DEVELOPMENT ? "debug-screens" : ""
+        process.env.NODE_ENV === "development" ? "debug-screens" : ""
       }`}
     >
       <div className="font-bold text-4xl grid h-28 justify-center items-center text-center md:p-4 md:mb-4 bg-red-800">
@@ -21,7 +20,6 @@ export default function page() {
         <Recorder />
         <Block />
         <Calculator />
-        <Temporizador />
       </div>
       <div className="flex justify-between items-center px-10">
         <a href="https://diegotorres-portfoliodev.vercel.app">
