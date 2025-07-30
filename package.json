@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tabler/icons-react": "^3.28.1",
+    "@vercel/analytics": "^1.5.0",
     "axios": "^1.7.9",
     "framer-motion": "^12.23.9",
     "next": "15.1.4",
