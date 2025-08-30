@@ -102,28 +102,28 @@ export default function Conversor() {
       </div>
 
       <div
-        className={`grid ${
-          webUrl && "grid-cols-[3fr_1fr]"
+        className={` ${
+          webUrl ? "grid grid-cols-[3fr_1fr]":"flex w-full"
         } h-full justify-center`}
       >
         <div
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
-          className="w-full h-full flex flex-col justify-center items-center"
+          className="w-full h-full flex-1 justify-center items-center  border-t-2 border-r-2 border-white"
         >
           <label
             htmlFor="imagen"
-            className="h-full w-full grid gap-4 items-center grid-rows-[3fr_1fr] justify-center"
+            className="h-full w-full grid gap-4 items-center grid-rows-[5fr_1fr] justify-center"
           >
             {preview ? (
               <>
-              <div className="w-full h-full flex justify-center items-center">
+              <div className="w-full h-full flex justify-center items-center p-4">
                 <img
                   src={preview}
                   alt="Vista previa"
                   className="max-h-48 object-contain border rounded"
                 /></div>
-                <div className="w-full h-full border-t-2 border-white flex items-center justify-center">
+                <div className="w-full h-full flex items-center justify-center">
                 <p className=" h-full flex justify-center items-center">{filename + "." + format}</p></div>
               </>
             ) : (
@@ -140,7 +140,7 @@ export default function Conversor() {
         </div>
 
         {webUrl && (
-          <div className="border-l-2 p-4 flex flex-col gap-2 h-full border-white">
+          <div className="p-4 flex flex-col gap-2 h-full  bg-red-700">
             <div className="flex h-full gap-2 flex-col py-2 ">
               <div className="w-full flex flex-col justify-center">
                 <p className="text-xl font-bold">FORMAT:</p>
